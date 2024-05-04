@@ -7,6 +7,8 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 import styles from './styles.module.css';
 import {Adsense} from '@ctrl/react-adsense';
 import logo from '../../static/logo.gif';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import {CopyToClipboard} from "react-copy-to-clipboard"
 
 const youtubeLink = "https://www.youtube.com/c/CodeZri";
 const features = [
@@ -92,6 +94,8 @@ function Feature({imageUrl, title, description}) {
 }
 
 export default function Home() {
+  const [click, setClick] = useState(false);
+  const [copiedText, setCopiedText] = useState(false);
   const context = useDocusaurusContext();
   const {siteConfig = {}} = context;
   const [isInitialized, setIsInitialized] = useState(false);
@@ -239,7 +243,21 @@ export default function Home() {
           <p className="hero__subtitle">
             <code>
               npm install -g @neutralinojs/neu
-            </code>
+            </code>   
+            <CopyToClipboard text="npm install -g @neutralinojs/neu" onCopy={() => setCopiedText(true)}> 
+            <ContentCopyIcon 
+            style={{margin:'-5px 10px', cursor:'pointer', color: click ? "rgb(72, 77, 91)" : null}}
+            onClick={()=>{
+              setClick(true) 
+              setTimeout(() => {
+                setClick(false)
+              }, 500);
+              setTimeout(() => {
+                alert("Copied to clipboard!")
+              }, 501);
+            }}
+            />
+            </CopyToClipboard>
           </p>
         </div>
       </div>
